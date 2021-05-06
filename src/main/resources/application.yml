@@ -1,0 +1,33 @@
+spring:
+  application.name: doulevo-user-api
+  profiles:
+    active: dev
+
+server :
+  port : 2221
+  servlet.context-path: /doulevo-user-api
+
+
+logging:
+  level:
+    root: INFO
+    com.doulevo: DEBUG
+    org.hibernate: INFO
+    org.springframework: INFO
+    org.springframework.boot: INFO
+    org.springframework.orm: INFO
+    org.springframework.jdbc: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+  file:
+    path: './logs/${spring.application.name}'
+    name: ${logging.file.path}/${spring.application.name}.log
+
+
+app.doulevo:
+  timezone: 'GMT' # 'GMT' is a Timezone, 'UTC' is a standard
+  github-api:
+    url: 'https://api.github.com'
+    api-path: "users"
+    username: ''
+    password: ''

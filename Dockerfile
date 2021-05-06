@@ -1,0 +1,20 @@
+FROM openjdk:13-jdk-alpine
+VOLUME /tmp
+RUN echo $JAVA_HOME
+
+WORKDIR /home/doulevo/doulevo-user-service
+RUN pwd
+RUN ls -ltr
+
+ARG EXE_FILE=target/*-exec.jar
+ADD ${EXE_FILE} app.jar
+
+ARG SPRING_PROFILES_ACTIVE
+ARG APP_DOULEVO_GITHUB_API_USERNAME
+ARG APP_DOULEVO_GITHUB_API_PASSWORD
+
+ENV SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+ENV APP_DOULEVO_GITHUB_API_USERNAME=${APP_DOULEVO_GITHUB_API_USERNAME}
+ENV APP_DOULEVO_GITHUB_API_PASSWORD=${APP_DOULEVO_GITHUB_API_PASSWORD}
+
+ENTRYPOINT ["sh", "-c", "java -showversion -Djava.security.egd=file:/dev/./urandom -jar -Dapp.doulevo.github-api.username=${APP_DOULEVO_GITHUB_API_USERNAME} -Dapp.doulevo.github-api.password=${APP_DOULEVO_GITHUB_API_PASSWORD} -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE} app.jar"]
